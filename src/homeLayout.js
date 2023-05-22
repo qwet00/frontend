@@ -19,6 +19,7 @@ export default function HomeLayout() {
         API.post("/login", loginJson).then((response)=>{
             
               if(response.data== "True"){
+                sessionStorage.setItem("name",kullaniciAdi)
                 window.location.href = "/AnaSayfa"
               }else if(response.data == "False"){
                 alert("Kullanıcı adı veya Şifre Yanlış")

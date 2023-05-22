@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState , useEffect} from 'react'
 import { Breadcrumb, Button, Layout, Space, theme, Input, Row, Col, Image } from 'antd';
 import { ReadOutlined } from '@ant-design/icons';
+import API from './api';
 import kitaplar from './images/images.jpeg'
 import kitap1 from './images/kitap1.jpeg'
 import kitap2 from './images/kitap2.jpeg'
@@ -15,135 +16,59 @@ export default function MainPage() {
     const {
         token: { colorBgContainer },
     } = theme.useToken();
+    const [kitaplar,setKitaplar] = useState([])
+        
+    useEffect(() => {
+    var loginJson= {
+            kullanici:sessionStorage.getItem('name'),
+        }
+        API.post("/getBooks", loginJson).then((response)=>{
+            
+              setKitaplar(response.data)
+            
+          })  
+        },[]);
     return (
-        <Layout className="layout">
+        <Layout className="layout" style={{  background:'#f5fffa' }}>
             <Header style={{ textAlign: 'center', top: '0px', position: 'fixed', width: '100%' }}>
                 <div className="logo" />
                 <Space >
                     <ReadOutlined style={{ color: 'white' }} />
                     <Space style={{ color: 'white' }}> Kütüphane </Space>
                     <Space style={{ color: 'white', marginLeft:'900px'}}> Kullanıcı </Space>
-                    <Button type="primary"  style={{ marginLeft: '10px' }}>Hesabım</Button>
+                    <Button href="/KitapEkle" type="primary"  style={{ marginLeft: '10px' }}>Kitap Ekle</Button>
                     <Button type="primary" danger style={{ marginLeft: '20px' }} onClick={()=> window.location.href = "/" }>Çıkış yap</Button></Space>
 
             </Header>
-            <Content style={{ padding: '120px', height: '100%', }}>
+            
+            <Content style={{ padding: '120px', height: '100%', background:'#f5fffa' }}>
 
-                <div className="site-layout-content" style={{ height: '100%' }}>
-                    <Row style={{ height: '100%' }}>
-                       
-                        <Col span={6}> <a href=""><Space direction='vertical' >
-                        <Space><img width="150" height="200" src={kitap1}></img>
+                <div className="site-layout-content" style={{ height: '100%', background:'#f5fffa' }}>
+                    <Row style={{ height: '100%',background:'#f5fffa' }}>
+                       {kitaplar.map((val)=>{
+                        console.log(val)
+                        return(<Col style={{  background:'#f5fffa' }}span={6}> <a href={"http://localhost:3000/kitapSayfasi?id="+val[6]}><Space direction='vertical' >
+                        <Space style={{  background:'#f5fffa' }}><img width="150" height="200" src={val[3]}></img>
                             
                             </Space>
-                            <Space direction='vertical' >
-                                <Space > <h3 style={{ marginBottom:'-10px'}}>Kürk Mantolu Madonna</h3></Space>
-                                <Space> <h3 style={{ textAlign:'center'}}>40 tl</h3></Space>
+                            <Space direction='vertical' style={{  background:'#f5fffa' }}>
+                                <Space style={{  background:'#f5fffa' }} > <h3 style={{ marginBottom:'-10px'}}>{val[0]}</h3></Space>
+                                <Space style={{  background:'#f5fffa' }}> <h3 style={{ textAlign:'center'}}>{val[5]}</h3></Space>
                             
                                
                                 </Space>
                             </Space> 
                             </a>
-                        </Col>
-                        <Col span={6}> <a href=""><Space direction='vertical' >
-                        <Space><img width="150" height="200" src={kitap2}></img>
+                        </Col>)
                             
-                            </Space>
-                            <Space direction='vertical' >
-                                <Space align='center'> <h3 style={{ textAlign:'center', marginBottom:'-10px'}}>Harry Potter Kitap Serisi</h3></Space>
-                                 <Space> <h3 style={{ textAlign:'center'}}>250 tl</h3></Space>
-                            
-                               
-                                </Space>
-                            </Space> 
-                            </a>
-                        </Col>
-                        <Col span={6}> <a href=""><Space direction='vertical' >
-                        <Space><img width="150" height="200" src={kitap3}></img>
-                            
-                            </Space>
-                            <Space direction='vertical' >
-                                <Space align='center'> <h3 style={{ textAlign:'center', marginBottom:'-10px'}}>Romeo ve Juliet</h3></Space>
-                                <Space> <h3 style={{ textAlign:'center'}}>Ücretsiz</h3></Space>
-                            
-                               
-                                </Space>
-                            </Space> 
-                            </a>
-                        </Col>
-                        <Col span={6}> <a href=""><Space direction='vertical' >
-                        <Space><img width="150" height="200" src={kitap4}></img>
-                            
-                            </Space>
-                            <Space direction='vertical' >
-                                <Space align='center'> <h3 style={{ textAlign:'center', marginBottom:'-10px'}}>Hayvan Çiftliği</h3></Space>
-                                <Space> <h3 style={{ textAlign:'center'}}>Ücretsiz</h3></Space>
-                            
-                               
-                                </Space>
-                            </Space> 
-                            </a>
-                        </Col>
+
+                       })}
                         
+                      
+                    
                        
                     </Row>
-                    <Row style={{ height: '100%' }}>
-                       
-                        <Col span={6}> <a href=""><Space direction='vertical' >
-                        <Space><img width="150" height="200" src={kitap5}></img>
-                            
-                            </Space>
-                            <Space direction='vertical' >
-                                <Space > <h3 style={{ marginBottom:'-10px'}}>Denizler Altında 20 Bin Fersah</h3></Space>
-                                <Space> <h3 style={{ textAlign:'center'}}>80 tl</h3></Space>
-                            
-                               
-                                </Space>
-                            </Space> 
-                            </a>
-                        </Col>
-                        <Col span={6}> <a href=""><Space direction='vertical' >
-                        <Space><img width="150" height="200" src={kitap6}></img>
-                            
-                            </Space>
-                            <Space direction='vertical' >
-                                <Space align='center'> <h3 style={{ textAlign:'center', marginBottom:'-10px'}}> Küçük Prens</h3></Space>
-                                 <Space> <h3 style={{ textAlign:'center'}}>Ücretsiz</h3></Space>
-                            
-                               
-                                </Space>
-                            </Space> 
-                            </a>
-                        </Col>
-                        <Col span={6}> <a href=""><Space direction='vertical' >
-                        <Space><img width="150" height="200" src={kitap7}></img>
-                            
-                            </Space>
-                            <Space direction='vertical' >
-                                <Space align='center'> <h3 style={{ textAlign:'center', marginBottom:'-10px'}}>Güliverin Gezileri</h3></Space>
-                                <Space> <h3 style={{ textAlign:'center'}}>Ücretsiz</h3></Space>
-                            
-                               
-                                </Space>
-                            </Space> 
-                            </a>
-                        </Col>
-                        <Col span={6}> <a href=""><Space direction='vertical' >
-                        <Space><img width="150" height="200" src={kitap8}></img>
-                            
-                            </Space>
-                            <Space direction='vertical' >
-                                <Space align='center'> <h3 style={{ textAlign:'center', marginBottom:'-10px'}}>Alice Harikalar Diyarında</h3></Space>
-                                <Space> <h3 style={{ textAlign:'center'}}>50 tl</h3></Space>
-                            
-                               
-                                </Space>
-                            </Space> 
-                            </a>
-                        </Col>
-                        
-                       
-                    </Row>
+                   
                     
                    
                     
