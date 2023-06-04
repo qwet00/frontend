@@ -42,7 +42,8 @@ export default function BookPage() {
                 <Space>
                     <ReadOutlined style={{ color: 'white' }} />
                     <Space style={{ color: 'white' }}> Kütüphane </Space>
-                    <Button style={{ marginLeft: '50px' }} type="primary"  danger onClick={() => window.location.href = "/Anasayfa"}>Ana Sayfa</Button></Space>
+                    <Button style={{ marginLeft: '50px' }} type="primary"  danger onClick={() => window.location.href = "/Anasayfa"}>Ana Sayfa</Button>
+                    </Space>
 
             </Header>
             <Content style={{ padding: '0 50px', height: '100%',background:'white' }}>
@@ -78,7 +79,7 @@ export default function BookPage() {
                                         <p style={{ fontSize: '1em' }} >{kitap[2]}</p>
                                     </Space>
                                     <Space >
-                                        <Button type='primary' >Mesaj At</Button>
+                                        <Button type='primary' href={"http://localhost:3000/mesajlar?user="+kitap[4]} >Mesaj At</Button>
                                     </Space>
 
                                     </Space>

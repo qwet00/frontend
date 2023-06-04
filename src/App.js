@@ -4,6 +4,7 @@ import MainPage from "./MainPage";
 import Regsiter from "./Register";
 import Addbook from "./kitapekle";
 import BookPage from "./bookPage";
+import Messages from "./messages";
 function App() {
   return (
     <Routes>
@@ -12,6 +13,7 @@ function App() {
     <Route path ="/Kayit" element={<Regsiter/>} />   
     <Route path ="/KitapEkle" element={<Addbook/>} />
     <Route path ="/kitapSayfasi" element={<BookPage/>} />
+    <Route path ="/mesajlar" element={<Messages/>} />
     </Routes>
     
   );

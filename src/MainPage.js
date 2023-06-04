@@ -2,36 +2,42 @@ import React, { useState , useEffect} from 'react'
 import { Breadcrumb, Button, Layout, Space, theme, Input, Row, Col, Image } from 'antd';
 import { ReadOutlined } from '@ant-design/icons';
 import API from './api';
-import kitaplar from './images/images.jpeg'
-import kitap1 from './images/kitap1.jpeg'
-import kitap2 from './images/kitap2.jpeg'
-import kitap3 from './images/kitap3.png'
-import kitap4 from './images/kitap4.jpeg'
-import kitap5 from './images/kitap5.jpeg'
-import kitap6 from './images/kitap6.jpeg'
-import kitap7 from './images/kitap7.jpeg'
-import kitap8 from './images/kitap8.jpeg'
+const { Search } = Input;
 const { Header, Content, Footer } = Layout;
 export default function MainPage() {
     const {
         token: { colorBgContainer },
     } = theme.useToken();
-    const [kitaplar,setKitaplar] = useState([])
-        
+    const [kitaplar,setKitaplar] = useState([])  
     useEffect(() => {
     var loginJson= {
-            kullanici:sessionStorage.getItem('name'),
+            keyword:"",
         }
         API.post("/getBooks", loginJson).then((response)=>{
-            
+           
               setKitaplar(response.data)
-            
+             
           })  
         },[]);
+
+        const onSearch = (value) => {
+
+            var loginJson= {
+                keyword:value
+            }
+            API.post("/getBooks", loginJson).then((response)=>{
+               
+                  setKitaplar(response.data)
+                 
+              }) 
+        }
     return (
         <Layout className="layout" style={{  background:'#f5fffa' }}>
             <Header style={{ textAlign: 'center', top: '0px', position: 'fixed', width: '100%' }}>
+               
+            
                 <div className="logo" />
+         
                 <Space >
                     <ReadOutlined style={{ color: 'white' }} />
                     <Space style={{ color: 'white' }}> Kütüphane </Space>
@@ -40,7 +46,15 @@ export default function MainPage() {
                     <Button type="primary" danger style={{ marginLeft: '20px' }} onClick={()=> window.location.href = "/" }>Çıkış yap</Button></Space>
 
             </Header>
-            
+            <Search
+      placeholder="Kitap veya Yazar Adı Giriniz"
+      onSearch={onSearch}
+      style={{
+        width: 300,
+        marginTop: 100,
+        marginLeft: 100
+      }}
+    />  
             <Content style={{ padding: '120px', height: '100%', background:'#f5fffa' }}>
 
                 <div className="site-layout-content" style={{ height: '100%', background:'#f5fffa' }}>
